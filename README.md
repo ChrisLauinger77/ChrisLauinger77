@@ -5,7 +5,7 @@ My name is Chris. I am a software application developer 30+ years.
 - 🔭 I’m currently working on gnome-shell-extensions
 - 🌱 I’m currently learning rest api & javascript
 
-[![Chris's GitHub stats](https://githubcard.com/ChrisLauinger77.svg?d=4KOl79Gi)
+![Chris's GitHub stats](https://githubcard.com/ChrisLauinger77.svg?d=4KOl79Gi)
 
 <!--
 **ChrisLauinger77/ChrisLauinger77** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
