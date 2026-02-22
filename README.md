@@ -3,7 +3,7 @@
 My name is Chris. I am a software application developer 30+ years.
 
 - 🔭 I’m currently working on gnome-shell-extensions
-- 🌱 I’m currently learning rest api & javascript
+- 🌱 I’m currently learning swift & javascript
 
 ![Chris's GitHub stats](https://githubcard.com/ChrisLauinger77.svg?d=4KOl79Gi)
 
