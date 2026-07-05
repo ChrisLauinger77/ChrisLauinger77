@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "extends": ["config:recommended"],
+
+  "labels": ["dependencies"],
+
+  "assignees": ["ChrisLauinger77"],
+
+  "reviewers": ["ChrisLauinger77"],
+
+  "dependencyDashboard": true,
+
+  "prConcurrentLimit": 3,
+
+  "schedule": ["on the first saturday of the month"],
+
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": true
+    }
+  ]
+}
