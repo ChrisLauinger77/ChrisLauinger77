@@ -1,0 +1,54 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>ChrisLauinger77/ChrisLauinger77//renovate-config/default",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^io\\.github\\.ChrisLauinger\\.MprisMiniPlayer\\.yml$/"
+      ],
+      "matchStrings": [
+        "runtime-version:\\s*['\\\"]?(?<currentValue>\\d+)['\\\"]?"
+      ],
+      "depNameTemplate": "GNOME Flatpak runtime",
+      "packageNameTemplate": "ghcr.io/flathub-infra/flatpak-github-actions",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "loose",
+      "extractVersionTemplate": "^gnome-(?<version>\\d+)$"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/release\\.yml$/"
+      ],
+      "matchStrings": [
+        "image:\\s*ghcr\\.io/flathub-infra/flatpak-github-actions:gnome-(?<currentValue>\\d+)"
+      ],
+      "depNameTemplate": "GNOME Flatpak runtime",
+      "packageNameTemplate": "ghcr.io/flathub-infra/flatpak-github-actions",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "loose",
+      "extractVersionTemplate": "^gnome-(?<version>\\d+)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": [
+        "ghcr.io/flathub-infra/flatpak-github-actions"
+      ],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["custom.regex"],
+      "matchPackageNames": [
+        "ghcr.io/flathub-infra/flatpak-github-actions"
+      ],
+      "groupName": "GNOME Flatpak runtime",
+      "dependencyDashboardApproval": true
+    }
+  ]
+}
