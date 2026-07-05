@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -e /usr/scripts/apt-check-proxy.sh ]; then
+    /usr/scripts/apt-check-proxy.sh
+fi
+
+if [ "$1" = "update" ]; then
+   apt update
+elif [ "$1" = "upgrade" ]; then
+    apt update && apt upgrade && apt clean && apt autoremove
+else
+    apt update && apt upgrade && apt full-upgrade && apt clean && apt autoremove
+fi

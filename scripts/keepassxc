@@ -1,0 +1,3 @@
+#!/bin/bash
+sleep 5
+sudo -u tss /usr/bin/clevis-decrypt-tpm2 < .config/gnome-keyring.tpm2 | keepassxc --pw-stdin ~/Nextcloud/Files/Datenbank.kdbx
