@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>ChrisLauinger77/ChrisLauinger77//renovate-config/default",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["* * 1-7 * 6"]
+  }
+}
