@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>ChrisLauinger77/ChrisLauinger77//renovate-config/default"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/(?:build|compile_translations)\\.yml$/",
+        "/^docs/BUILD\\.md$/"
+      ],
+      "matchStrings": [
+        "QT_VERSION:\\s*[\"']?(?<currentValue>\\d+\\.\\d+\\.\\d+)[\"']?",
+        "CI workflow uses Qt `(?<currentValue>\\d+\\.\\d+\\.\\d+)`",
+        "C:/Qt/(?<currentValue>\\d+\\.\\d+\\.\\d+)/msvc2022_64"
+      ],
+      "depNameTemplate": "Qt",
+      "packageNameTemplate": "qt/qt5",
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v(?<version>\\d+\\.\\d+\\.\\d+)$"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["custom.regex"],
+      "matchPackageNames": ["qt/qt5"],
+      "groupName": "Qt",
+      "automerge": false
+    }
+  ]
+}
