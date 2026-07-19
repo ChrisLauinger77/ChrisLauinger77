@@ -1,0 +1,21 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "local>ChrisLauinger77/ChrisLauinger77//renovate-config/default",
+        "helpers:pinGitHubActionDigests"
+    ],
+    "packageRules": [
+        {
+            "description": "Gate Tauri and Rust toolchain updates until the Tauri 2 migration",
+            "matchPackageNames": [
+                "@tauri-apps/api",
+                "@tauri-apps/cli",
+                "tauri",
+                "tauri-build",
+                "tauri-apps/tauri-action",
+                "dtolnay/rust-toolchain"
+            ],
+            "dependencyDashboardApproval": true
+        }
+    ]
+}
