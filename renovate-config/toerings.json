@@ -6,7 +6,49 @@
     ],
     "packageRules": [
         {
-            "description": "Gate Tauri and Rust toolchain updates until the Tauri 2 migration",
+            "description": "Group compatible frontend dependency updates",
+            "matchManagers": [
+                "npm"
+            ],
+            "matchPackageNames": [
+                "!@tauri-apps/**"
+            ],
+            "matchUpdateTypes": [
+                "minor",
+                "patch"
+            ],
+            "groupName": "Frontend compatible updates"
+        },
+        {
+            "description": "Group compatible Rust updates for stable versions",
+            "matchManagers": [
+                "cargo"
+            ],
+            "matchPackageNames": [
+                "!tauri",
+                "!tauri-build"
+            ],
+            "matchCurrentVersion": ">=1.0.0",
+            "matchUpdateTypes": [
+                "minor",
+                "patch"
+            ],
+            "groupName": "Rust compatible updates"
+        },
+        {
+            "description": "Group Rust 0.x patch updates behind dashboard approval",
+            "matchManagers": [
+                "cargo"
+            ],
+            "matchCurrentVersion": "<1.0.0",
+            "matchUpdateTypes": [
+                "patch"
+            ],
+            "groupName": "Rust 0.x patch updates",
+            "dependencyDashboardApproval": true
+        },
+        {
+            "description": "Require approval for Tauri and Rust toolchain updates",
             "matchPackageNames": [
                 "@tauri-apps/api",
                 "@tauri-apps/cli",
