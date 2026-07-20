@@ -6,6 +6,20 @@
     ],
     "packageRules": [
         {
+            "description": "Group compatible frontend dependency updates",
+            "matchManagers": [
+                "npm"
+            ],
+            "matchPackageNames": [
+                "!@tauri-apps/**"
+            ],
+            "matchUpdateTypes": [
+                "minor",
+                "patch"
+            ],
+            "groupName": "Frontend compatible updates"
+        },
+        {
             "description": "Group the Svelte 5 toolchain migration to keep peer dependencies compatible",
             "matchManagers": [
                 "npm"
@@ -22,20 +36,6 @@
                 "vite"
             ],
             "groupName": "Svelte 5 migration"
-        },
-        {
-            "description": "Group compatible frontend dependency updates",
-            "matchManagers": [
-                "npm"
-            ],
-            "matchPackageNames": [
-                "!@tauri-apps/**"
-            ],
-            "matchUpdateTypes": [
-                "minor",
-                "patch"
-            ],
-            "groupName": "Frontend compatible updates"
         },
         {
             "description": "Group compatible Rust updates for stable versions",
