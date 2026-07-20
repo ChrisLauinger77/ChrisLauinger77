@@ -6,6 +6,17 @@
     ],
     "packageRules": [
         {
+            "description": "Group Prettier and its Svelte plugin to keep peer dependencies compatible",
+            "matchManagers": [
+                "npm"
+            ],
+            "matchPackageNames": [
+                "prettier",
+                "prettier-plugin-svelte"
+            ],
+            "groupName": "Prettier"
+        },
+        {
             "description": "Group compatible frontend dependency updates",
             "matchManagers": [
                 "npm"
