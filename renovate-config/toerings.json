@@ -20,6 +20,19 @@
             "groupName": "Frontend compatible updates"
         },
         {
+            "description": "Group the ESLint 10 flat-config migration and its TypeScript and Svelte integrations",
+            "matchManagers": [
+                "npm"
+            ],
+            "matchPackageNames": [
+                "@typescript-eslint/eslint-plugin",
+                "@typescript-eslint/parser",
+                "eslint",
+                "eslint-plugin-svelte"
+            ],
+            "groupName": "ESLint migration"
+        },
+        {
             "description": "Group the Svelte 5 toolchain migration to keep peer dependencies compatible",
             "matchManagers": [
                 "npm"
