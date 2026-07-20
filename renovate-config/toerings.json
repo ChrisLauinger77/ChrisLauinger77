@@ -33,6 +33,7 @@
                 "svelte-awesome-color-picker",
                 "svelte-check",
                 "svelte-preprocess",
+                "typescript",
                 "vite"
             ],
             "groupName": "Svelte 5 migration"
