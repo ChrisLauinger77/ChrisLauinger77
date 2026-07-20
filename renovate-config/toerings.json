@@ -6,16 +6,22 @@
     ],
     "packageRules": [
         {
-            "description": "Group Prettier, its Svelte plugin, and the Svelte major migration to keep peer dependencies compatible",
+            "description": "Group the Svelte 5 toolchain migration to keep peer dependencies compatible",
             "matchManagers": [
                 "npm"
             ],
             "matchPackageNames": [
+                "@sveltejs/vite-plugin-svelte",
+                "@tsconfig/svelte",
                 "prettier",
                 "prettier-plugin-svelte",
-                "svelte"
+                "svelte",
+                "svelte-awesome-color-picker",
+                "svelte-check",
+                "svelte-preprocess",
+                "vite"
             ],
-            "groupName": "Prettier and Svelte"
+            "groupName": "Svelte 5 migration"
         },
         {
             "description": "Group compatible frontend dependency updates",
