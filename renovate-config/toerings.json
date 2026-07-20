@@ -20,6 +20,25 @@
             "groupName": "Frontend compatible updates"
         },
         {
+            "description": "Group the Svelte 5 toolchain migration to keep peer dependencies compatible",
+            "matchManagers": [
+                "npm"
+            ],
+            "matchPackageNames": [
+                "@sveltejs/vite-plugin-svelte",
+                "@tsconfig/svelte",
+                "prettier",
+                "prettier-plugin-svelte",
+                "svelte",
+                "svelte-awesome-color-picker",
+                "svelte-check",
+                "svelte-preprocess",
+                "typescript",
+                "vite"
+            ],
+            "groupName": "Svelte 5 migration"
+        },
+        {
             "description": "Group compatible Rust updates for stable versions",
             "matchManagers": [
                 "cargo"
