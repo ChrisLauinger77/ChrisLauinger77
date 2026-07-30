@@ -6,6 +6,7 @@ usage() {
     echo
     echo "Examples:"
     echo "  $0 totoshko88/RustConn"
+    echo "  $0 wimpysworld/sidra"
     echo "  $0 totoshko88/RustConn 'rustconn_.*_amd64\\.deb$'"
 }
 
@@ -15,7 +16,7 @@ if [ $# -lt 1 ] || [ $# -gt 2 ]; then
 fi
 
 REPO="$1"
-ASSET_PATTERN="${2:-.*_amd64\\.deb$}"
+ASSET_PATTERN="${2:-.*[-_]amd64\\.deb$}"
 
 if [[ ! "$REPO" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]]; then
     echo "Error: repository must be in the form owner/repo"
