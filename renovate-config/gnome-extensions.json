@@ -6,6 +6,9 @@
   ],
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["* * 1-7 * 6"]
+    "schedule": [
+      "* * 8-14 * 6",
+      "* * 22-28 * 6"
+    ]
   }
 }
