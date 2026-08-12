@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review GNOME Shell Extension"
+  short_description: "Review extensions for GNOME submission"
+  default_prompt: "Use $review-gnome-shell-extension to review this GNOME Shell extension for extensions.gnome.org submission."
