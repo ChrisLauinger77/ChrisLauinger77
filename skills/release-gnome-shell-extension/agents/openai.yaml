@@ -1,4 +1,4 @@
 interface:
   display_name: "Release GNOME Shell Extension"
-  short_description: "Safely commit, tag, and push extension releases"
+  short_description: "Sync versions, commit, tag, and push extension releases"
   default_prompt: "Use $release-gnome-shell-extension to create release 50.4."
