@@ -12,6 +12,7 @@ Publish a release with an explicit version. Treat pushing the release commit and
 - Require an explicit version from the user. If none is present, ask for it; never infer or increment it.
 - Write the release version exactly as supplied to the top-level `version-name` field in `metadata.json`. Treat it as a string and preserve unrelated formatting and content.
 - When the extension release has a tracked `package.json`, derive its top-level `version` as an `x.y.z` numeric version. Append `.0` when the release version has two numeric components (`51.0` becomes `51.0.0`); preserve a release version that already has three numeric components. If the release version cannot be represented by either rule, stop and ask the user for the package version. Preserve unrelated formatting and content.
+- After updating an applicable `package.json`, run `npm install` in its package directory so an applicable tracked `package-lock.json` is refreshed and included in the release. Stop if the install fails or changes dependencies beyond the expected version and lockfile metadata updates.
 - Never edit the top-level `version` field in `metadata.json`. Extensions.gnome.org (EGO) owns that field.
 - When the user does not supply a separate tag, prefix the exact release version with `v`. Example: release `50.4` maps to tag `v50.4`.
 - When the user explicitly supplies a tag, use it exactly as written without adding, removing, or normalizing a prefix. Example: `create release 50.4 with tag 1.2.3` writes `version-name` as `50.4` and creates tag `1.2.3`.
@@ -29,12 +30,13 @@ Publish a release with an explicit version. Treat pushing the release commit and
    - When an applicable `package.json` exists, it has a top-level `version` field that can be updated as a string, and an `x.y.z` package version can be derived from the requested release version.
    - Uncommitted changes are understood and belong to the intended release. Never include unrelated changes. If unrelated changes make a safe release impossible, stop and explain.
 5. Update only the top-level `version-name` in `metadata.json` and, when applicable, the top-level `version` in `package.json` using the derived `x.y.z` package version. Preserve all unrelated fields and formatting, including the EGO-managed `version` in `metadata.json`.
-6. Run the repository's documented validation, test, lint, build, and packaging commands that are relevant to a release. At minimum, parse each changed JSON file, verify `metadata.json`'s `version-name` equals the requested release version, verify its `version` is unchanged, and verify the applicable `package.json` version equals the derived `x.y.z` package version.
-7. Review `git diff`, `git status`, and the exact files that will be committed. Confirm no generated secrets, unrelated files, or accidental formatting rewrites are included.
-8. Commit the intended release changes. Follow the repository's commit convention; otherwise use `Release <version>`.
-9. Create an annotated tag with the resolved tag name pointing at the new release commit, with message `Release <version>`.
-10. Reconfirm the commit and tag targets, then push the release commit to its configured remote and push the exact tag. Do not use `--force`, `--force-with-lease`, or broad `git push --tags`.
-11. Verify that the expected GitHub Actions or GitLab CI pipeline was created for the tag. Use available repository tooling, such as `gh`, `glab`, or the provider connector. Report the commit, tag, remote, and CI status or URL. If CI verification is unavailable, clearly state that the push succeeded but pipeline creation was not verified.
+6. After changing an applicable `package.json`, run `npm install` from that package's directory to update its tracked `package-lock.json`. Review the resulting lockfile changes and stop if npm makes unrelated dependency changes.
+7. Run the repository's documented validation, test, lint, build, and packaging commands that are relevant to a release. At minimum, parse each changed JSON file, verify `metadata.json`'s `version-name` equals the requested release version, verify its `version` is unchanged, verify the applicable `package.json` version equals the derived `x.y.z` package version, and verify a tracked `package-lock.json` records the same package version.
+8. Review `git diff`, `git status`, and the exact files that will be committed. Confirm no generated secrets, unrelated files, or accidental formatting rewrites are included.
+9. Commit the intended release changes, including the refreshed tracked `package-lock.json`. Follow the repository's commit convention; otherwise use `Release <version>`.
+10. Create an annotated tag with the resolved tag name pointing at the new release commit, with message `Release <version>`.
+11. Reconfirm the commit and tag targets, then push the release commit to its configured remote and push the exact tag. Do not use `--force`, `--force-with-lease`, or broad `git push --tags`.
+12. Verify that the expected GitHub Actions or GitLab CI pipeline was created for the tag. Use available repository tooling, such as `gh`, `glab`, or the provider connector. Report the commit, tag, remote, and CI status or URL. If CI verification is unavailable, clearly state that the push succeeded but pipeline creation was not verified.
 
 ## Safety boundaries
 
