@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>ChrisLauinger77/ChrisLauinger77//renovate-config/default",
+    "./default",
     "helpers:pinGitHubActionDigests"
   ],
   "lockFileMaintenance": {
