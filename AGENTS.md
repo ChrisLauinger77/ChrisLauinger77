@@ -20,6 +20,8 @@ unrelated user changes.
 - `nvim/` is a LazyVim-based Neovim configuration. Lua customizations live in
   `nvim/lua/config/` and `nvim/lua/plugins/`; `nvim/lazy-lock.json` pins plugin
   versions.
+- `zed/` contains Zed editor configuration; `zed/keymap.json` defines custom
+  keybindings.
 - `renovate-config/` contains shareable Renovate presets for other repositories.
 
 ## General working rules
@@ -117,6 +119,7 @@ could not be run:
 - Neovim Lua: run `stylua --check nvim/lua` when StyLua is installed. Run a
   headless Neovim/LazyVim startup check only when dependencies are already
   available and it will not unexpectedly install or update plugins.
+- Zed configuration: parse `zed/keymap.json` with `jq empty` after changes.
 - Skills: inspect front matter, links, bundled references, and corresponding
   `agents/openai.yaml` metadata. Exercise the documented workflow only when it
   is safe and within the user's requested scope.

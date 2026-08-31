@@ -1,0 +1,45 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "f11": "zed::ToggleFullScreen",
+      "ctrl-shift-s": "workspace::SaveAll",
+      "ctrl-w": "pane::CloseActiveItem",
+      "ctrl-pagedown": "pane::ActivateNextItem",
+      "ctrl-pageup": "pane::ActivatePreviousItem"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-d": "editor::DuplicateSelection",
+      "ctrl-j": "editor::JoinLines",
+      "ctrl-q": [
+        "editor::ToggleComments",
+        {
+          "advance_downwards": false
+        }
+      ],
+      "ctrl-k": [
+        "editor::ToggleComments",
+        {
+          "advance_downwards": false
+        }
+      ],
+      "ctrl-shift-down": "editor::MoveLineDown",
+      "ctrl-shift-up": "editor::MoveLineUp",
+      "ctrl-l": "editor::DeleteLine",
+      "ctrl-y": "editor::Redo",
+      "alt-backspace": "editor::Undo",
+      "ctrl-h": [
+        "pane::DeploySearch",
+        {
+          "replace_enabled": true
+        }
+      ],
+      "shift-delete": "editor::Cut",
+      "ctrl-insert": "editor::Copy",
+      "shift-insert": "editor::Paste"
+    }
+  }
+]
