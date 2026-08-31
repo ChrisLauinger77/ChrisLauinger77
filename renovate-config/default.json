@@ -15,8 +15,7 @@
   "dependencyDashboard": true,
   "prConcurrentLimit": 5,
   "schedule": [
-    "* * 8-14 * 6",
-    "* * 22-28 * 6"
+    "* * 1-7 * 6"
   ],
   "packageRules": [
     {

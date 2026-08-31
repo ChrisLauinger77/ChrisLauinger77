@@ -1,14 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "./default",
-    "helpers:pinGitHubActionDigests"
-  ],
+  "extends": ["./default", "helpers:pinGitHubActionDigests"],
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": [
-      "* * 8-14 * 6",
-      "* * 22-28 * 6"
-    ]
+    "schedule": ["* * 1-7 * 6"]
   }
 }
