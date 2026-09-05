@@ -1,11 +1,19 @@
 ---
 name: release-gnome-shell-extension
-description: Create and publish a GNOME Shell extension release by updating metadata.json version-name and the npm-compatible package.json version when present, committing the release, creating a default or explicitly requested Git tag, and pushing the commit and tag to trigger GitHub or GitLab CI. Use for requests such as "create release 50.4", "create release 50.4 with tag 1.2.3", "create release and tag 50.4", or equivalent release requests in GNOME Shell extension repositories.
+description: Create and publish a release only for a repository that is itself a GNOME Shell extension, identified by an extension metadata.json with top-level uuid and shell-version fields. Do not use for Tauri apps, desktop applications, libraries, or other projects merely because the user asks to create a release; follow the repository's AGENTS.md and release documentation instead.
 ---
 
 # Release GNOME Shell Extension
 
 Publish a release with an explicit version. Treat pushing the release commit and tag as part of "create release" even when the user does not separately mention tagging or pushing.
+
+## Applicability gate
+
+Before applying the release contract or taking release actions, locate the repository's release `metadata.json` and verify that it represents a GNOME Shell extension by containing top-level `uuid` and `shell-version` fields.
+
+If no such manifest exists, this skill does not apply. Do not follow the remaining instructions in this skill. Continue the user's release request using the repository's applicable `AGENTS.md` files and release documentation instead. This boundary also applies when a generic request such as `create release X.Y.Z` resembles the examples or workflow in this skill.
+
+Repository-specific instructions take precedence when they identify a different project type or define a different release and versioning workflow.
 
 ## Release contract
 
