@@ -1,94 +1,88 @@
 ---
 name: angkorgit
-description: Use AngKorGit from the command line to open Git repositories
-  and start repository cloning in the AngKorGit GUI.
+description: Open repositories for graphical Git inspection or interactive work
+  in AngKorGit, or launch its GUI clone flow. Use normal git for scripted Git
+  operations.
 ---
 
 # AngKorGit
 
-Use AngKorGit when graphical Git inspection or interaction is useful.
+Use AngKorGit when the user wants to open a repository, inspect history or changes
+visually, continue work interactively, or clone through its GUI. Opening the GUI
+does not authorise subsequent repository changes.
 
-## Commands
+Use `git` for status, diff, staging, commits, branches, merges, rebases, fetch,
+pull, push, tags, and other scripted Git operations. The installed AngKorGit CLI
+is a GUI launcher, not a replacement for `git`.
 
-Open the current repository:
+## Availability and help
 
-    akg
+```sh
+command -v akg || command -v angkorgit
+akg --help
+akg open --help
+akg clone --help
+```
 
-Open a specific repository:
+`akg` is the short alias for `angkorgit`; on this Debian installation it is a
+symlink to the same launcher. If only `angkorgit` exists, substitute it in every
+example. If neither exists, report that AngKorGit is unavailable; install only
+when requested. Recheck installed help before relying on additional commands.
 
-    akg open <path>
+The launcher has no `--version` option. On this Debian installation, obtain the
+application package version with `dpkg-query -W ang-kor-git`.
 
-Clone a repository using AngKorGit:
+## Open a repository
 
-    akg clone <url-or-owner/repo>
+`akg` and `akg open` open the current directory, without finding the Git root.
+From a known repository root, either works:
 
-Clone a specific branch:
+```sh
+akg
+```
 
-    akg clone -b <branch> <url-or-owner/repo>
+From a subdirectory, resolve the root first and launch only if Git succeeds:
 
-Show CLI help:
+```sh
+if repo_root=$(git rev-parse --show-toplevel); then
+    akg open "$repo_root"
+fi
+```
 
-    akg --help
+For another repository, use `git -C` to validate the path and resolve its root:
 
-`angkorgit` can be used instead of the `akg` alias.
+```sh
+repo_path=/var/data/dev/sidra
+if repo_root=$(git -C "$repo_path" rev-parse --show-toplevel); then
+    akg open "$repo_root"
+fi
+```
 
-## When to use AngKorGit
+Keep paths quoted. A failed lookup must not fall through to opening an empty
+path or the current directory. `--show-toplevel` requires a working tree; for a
+bare repository, report that limitation rather than guessing a root.
 
-Prefer AngKorGit when the user wants to:
+The launcher also accepts a path directly (`akg /var/data/dev/sidra`). Prefer
+`akg open "$repo_root"` for clarity. It checks path existence, not Git validity.
 
-- inspect repository history graphically
-- review changes in the GUI
-- open the current repository in AngKorGit
-- clone a repository through AngKorGit
-- continue Git work interactively in AngKorGit
+## Clone through the GUI
 
-## When not to use AngKorGit
+Run from the intended parent directory: the launcher passes the current
+directory to the application as the clone destination parent.
 
-Do not assume AngKorGit CLI supports normal Git operations.
+```sh
+cd /var/data/dev
+akg clone <url-or-owner/repo>
+akg clone -b <branch> <url-or-owner/repo>
+```
 
-Use `git` for:
+Replace angle-bracket placeholders with real arguments; quote URLs and branch
+names. An `owner/repo` shorthand such as `torvalds/linux` is supported.
+`--branch` is also accepted in place of `-b`. Choose one clone command and use it
+only when cloning is requested; there is no documented dry-run option.
 
-- status
-- diff
-- add
-- commit
-- branch
-- merge
-- rebase
-- fetch
-- pull
-- push
-- tag
-
-For example:
-
-    git status
-    git diff
-
-Do not invent commands such as:
-
-    akg status
-    akg commit
-    akg push
-
-unless they are documented by the installed AngKorGit version.
-
-## Repository detection
-
-Before opening AngKorGit, verify that the current directory is a
-Git repository when appropriate:
-
-    git rev-parse --show-toplevel
-
-Open the repository root rather than an arbitrary subdirectory:
-
-    akg open "$(git rev-parse --show-toplevel)"
-
-## Availability
-
-Check whether AngKorGit is installed:
-
-    command -v akg || command -v angkorgit
-
-If neither command exists, do not attempt to install AngKorGit
-without user approval.
+Cloning is handed to the GUI, rather than performed synchronously by the
+launcher. On Debian it starts `/usr/bin/angkorgit` in the background and discards
+its output. A successful launcher exit proves dispatch, not that the window
+opened or the clone completed. Verify the GUI or resulting repository before
+reporting success. Use `git clone` when a scripted clone is needed.
