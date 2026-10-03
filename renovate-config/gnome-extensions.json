@@ -1,6 +1,13 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["./default", "helpers:pinGitHubActionDigests"],
+  "packageRules": [
+    {
+      "description": "Leave in-range npm updates to lock file maintenance",
+      "matchManagers": ["npm"],
+      "rangeStrategy": "replace"
+    }
+  ],
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["* * 1-7 * 6"]
