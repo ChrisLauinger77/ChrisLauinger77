@@ -1,0 +1,40 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "./default",
+    "helpers:pinGitHubActionDigests"
+  ],
+  "automerge": false,
+  "packageRules": [
+    {
+      "description": "Group compatible Rust updates for stable versions",
+      "matchManagers": ["cargo"],
+      "matchCurrentVersion": ">=1.0.0",
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Rust compatible updates"
+    },
+    {
+      "description": "Group Rust 0.x patch updates behind dashboard approval",
+      "matchManagers": ["cargo"],
+      "matchCurrentVersion": "<1.0.0",
+      "matchUpdateTypes": ["patch"],
+      "groupName": "Rust 0.x patch updates",
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Review potentially breaking Rust 0.x minor updates individually",
+      "matchManagers": ["cargo"],
+      "matchCurrentVersion": "<1.0.0",
+      "matchUpdateTypes": ["minor"],
+      "groupName": null,
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Review Rust toolchain action updates separately",
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["dtolnay/rust-toolchain"],
+      "groupName": "Rust toolchain",
+      "dependencyDashboardApproval": true
+    }
+  ]
+}
