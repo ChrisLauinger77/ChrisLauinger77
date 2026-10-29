@@ -1,6 +1,8 @@
-
 #!/usr/bin/env bash
 set -euo pipefail
+
+# Print directly so a pager cannot pause the script.
+export GH_PAGER=cat
 
 # List open GitHub pull requests.
 # Usage: ./list-prs.sh
@@ -35,4 +37,4 @@ gh pr list "${repo_args[@]}" \
     --state open \
     --limit 100 \
     --json number,title,author,headRefName,isDraft,mergeable \
-    --template '{{tablerow "PR" "TITLE" "AUTHOR" "BRANCH" "STATUS"}}{{range .}}{{tablerow (printf "#%v" .number) .title .author.login .headRefName (if .isDraft) "DRAFT" (else if (eq .mergeable "MERGEABLE")) "READY" (else .mergeable) end) }}{{end}}'
+    --template '{{tablerow "PR" "TITLE" "AUTHOR" "BRANCH" "STATUS"}}{{range .}}{{$status := .mergeable}}{{if .isDraft}}{{$status = "DRAFT"}}{{else if eq .mergeable "MERGEABLE"}}{{$status = "READY"}}{{end}}{{tablerow (printf "#%v" .number) .title .author.login .headRefName $status}}{{end}}'

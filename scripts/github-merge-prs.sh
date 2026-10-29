@@ -1,6 +1,8 @@
-
 #!/usr/bin/env bash
 set -euo pipefail
+
+# Print directly so a pager cannot pause the script.
+export GH_PAGER=cat
 
 # Merge GitHub pull requests sequentially using squash.
 # Usage: ./merge-prs.sh 101 102 103
