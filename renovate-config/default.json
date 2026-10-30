@@ -30,6 +30,11 @@
     {
       "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Pinning only locks the commit already in use; no need to wait",
+      "matchUpdateTypes": ["pinDigest"],
+      "minimumReleaseAge": null
     }
   ]
 }
