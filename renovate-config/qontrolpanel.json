@@ -7,7 +7,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^\\.github/workflows/(?:build|compile_translations)\\.yml$/",
+        "/^\\.github/workflows/(?:ci|release|compile_translations)\\.yml$/",
         "/^docs/BUILD\\.md$/"
       ],
       "matchStrings": [
