@@ -1,10 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "./default",
-    "helpers:pinGitHubActionDigests"
+    "github>ChrisLauinger77/ChrisLauinger77//renovate-config/default"
   ],
-  "automerge": false,
   "packageRules": [
     {
       "description": "Group compatible Rust updates for stable versions",

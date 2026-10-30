@@ -1,13 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>ChrisLauinger77/ChrisLauinger77//renovate-config/default",
-    "helpers:pinGitHubActionDigests"
+    "github>ChrisLauinger77/ChrisLauinger77//renovate-config/default"
   ],
-  "automerge": false,
   "packageRules": [
     {
-      "description": "Group compatible frontend dependency updates",
+      "description": "Keep unrelated npm updates independently reviewable",
       "matchManagers": [
         "npm"
       ],
@@ -18,10 +16,10 @@
         "minor",
         "patch"
       ],
-      "groupName": "Frontend compatible updates"
+      "groupName": null
     },
     {
-      "description": "Group compatible Rust updates for stable versions",
+      "description": "Keep unrelated Rust updates independently reviewable",
       "matchManagers": [
         "cargo"
       ],
@@ -29,15 +27,14 @@
         "!tauri",
         "!tauri-build"
       ],
-      "matchCurrentVersion": ">=1.0.0",
       "matchUpdateTypes": [
         "minor",
         "patch"
       ],
-      "groupName": "Rust compatible updates"
+      "groupName": null
     },
     {
-      "description": "Group Rust 0.x patch updates behind dashboard approval",
+      "description": "Review Rust 0.x patch updates individually behind dashboard approval",
       "matchManagers": [
         "cargo"
       ],
@@ -45,7 +42,6 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "groupName": "Rust 0.x patch updates",
       "dependencyDashboardApproval": true
     },
     {
@@ -80,6 +76,104 @@
       ],
       "groupName": "Rust toolchain",
       "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Keep React packages together",
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ],
+      "groupName": "react"
+    },
+    {
+      "description": "Vite and its React plugin must move together",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "vite",
+        "@vitejs/plugin-react"
+      ],
+      "groupName": "Vite toolchain"
+    },
+    {
+      "description": "Node and jsdom runtime requirements must move together",
+      "matchManagers": [
+        "npm",
+        "github-actions"
+      ],
+      "matchDatasources": [
+        "npm",
+        "node-version"
+      ],
+      "matchPackageNames": [
+        "node",
+        "jsdom"
+      ],
+      "groupName": "Node.js test runtime"
+    },
+    {
+      "description": "Windows API crates move together; migrations require full CI, a packaged Windows artifact and notification/tray/Notification Center/activation smoke tests",
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchDatasources": [
+        "crate"
+      ],
+      "matchPackageNames": [
+        "windows",
+        "windows-core"
+      ],
+      "groupName": "Windows API crates"
+    },
+    {
+      "description": "Keep windows-core below 0.100 until a matching windows crate is available; review future paired updates together",
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchDatasources": [
+        "crate"
+      ],
+      "matchPackageNames": [
+        "windows-core"
+      ],
+      "allowedVersions": "<0.100.0"
+    },
+    {
+      "description": "Keep GTK aligned with Tauri/Wry gtk-rs; defer breaking 0.x minor and major updates until stack-compatible, then require a Linux native build and graphical notification/tray/browser/lifecycle smoke tests",
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchDatasources": [
+        "crate"
+      ],
+      "matchPackageNames": [
+        "gtk"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "major"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "GIO generation changes follow Tauri/Wry gtk-rs compatibility",
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchPackageNames": [
+        "gio"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "major"
+      ],
+      "enabled": false
     }
   ]
 }

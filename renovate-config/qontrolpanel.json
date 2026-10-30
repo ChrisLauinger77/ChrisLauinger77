@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>ChrisLauinger77/ChrisLauinger77//renovate-config/default"
+    "github>ChrisLauinger77/ChrisLauinger77//renovate-config/default"
   ],
   "customManagers": [
     {
@@ -26,8 +26,7 @@
     {
       "matchManagers": ["custom.regex"],
       "matchPackageNames": ["qt/qt5"],
-      "groupName": "Qt",
-      "automerge": false
+      "groupName": "Qt"
     }
   ]
 }

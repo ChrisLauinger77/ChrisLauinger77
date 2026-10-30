@@ -1,8 +1,7 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "local>ChrisLauinger77/ChrisLauinger77//renovate-config/default",
-        "helpers:pinGitHubActionDigests"
+        "github>ChrisLauinger77/ChrisLauinger77//renovate-config/default"
     ],
     "packageRules": [
         {
@@ -20,20 +19,24 @@
             "groupName": "Frontend compatible updates"
         },
         {
-            "description": "Group the ESLint 10 flat-config migration and its TypeScript and Svelte integrations",
+            "description": "Keep ESLint and its plugins/configs together",
             "matchManagers": [
                 "npm"
             ],
             "matchPackageNames": [
+                "@eslint/js",
                 "@typescript-eslint/eslint-plugin",
                 "@typescript-eslint/parser",
                 "eslint",
-                "eslint-plugin-svelte"
+                "eslint-config-prettier",
+                "eslint-plugin-import-x",
+                "eslint-plugin-svelte",
+                "globals"
             ],
-            "groupName": "ESLint migration"
+            "groupName": "ESLint"
         },
         {
-            "description": "Group the Svelte 5 toolchain migration to keep peer dependencies compatible",
+            "description": "Keep the Svelte/Vite/TypeScript toolchain together so peer dependencies stay compatible",
             "matchManagers": [
                 "npm"
             ],
@@ -49,7 +52,7 @@
                 "typescript",
                 "vite"
             ],
-            "groupName": "Svelte 5 migration"
+            "groupName": "Svelte toolchain"
         },
         {
             "description": "Group compatible Rust updates for stable versions",
@@ -80,12 +83,30 @@
             "dependencyDashboardApproval": true
         },
         {
-            "description": "Require approval for Tauri and Rust toolchain updates",
+            "description": "Review potentially breaking Rust 0.x minor updates individually",
+            "matchManagers": [
+                "cargo"
+            ],
+            "matchCurrentVersion": "<1.0.0",
+            "matchUpdateTypes": [
+                "minor"
+            ],
+            "groupName": null,
+            "dependencyDashboardApproval": true
+        },
+        {
+            "description": "Keep Tauri JS and Rust packages on matching versions and require dashboard approval",
             "matchPackageNames": [
-                "@tauri-apps/api",
-                "@tauri-apps/cli",
+                "@tauri-apps/**",
                 "tauri",
-                "tauri-build",
+                "tauri-build"
+            ],
+            "groupName": "Tauri",
+            "dependencyDashboardApproval": true
+        },
+        {
+            "description": "Require approval for Tauri action and Rust toolchain updates",
+            "matchPackageNames": [
                 "tauri-apps/tauri-action",
                 "dtolnay/rust-toolchain"
             ],
