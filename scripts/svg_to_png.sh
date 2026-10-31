@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 
 inkscape $1 --export-type="png" -o mac16.png -h 16
