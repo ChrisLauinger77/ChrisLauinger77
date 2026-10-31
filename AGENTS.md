@@ -15,14 +15,17 @@ unrelated user changes.
 - `scripts/` contains standalone administration, installation, conversion,
   backup, and desktop helper scripts. They target different environments and
   may intentionally contain machine-specific paths.
-- `skills/` contains the canonical personal Codex skills and their supporting
-  agent metadata and references.
+- `skills/` contains the canonical personal agent skills, shared by Codex and
+  Claude Code, and their supporting agent metadata and references.
 - `nvim/` is a LazyVim-based Neovim configuration. Lua customizations live in
   `nvim/lua/config/` and `nvim/lua/plugins/`; `nvim/lazy-lock.json` pins plugin
   versions.
 - `zed/` contains Zed editor configuration; `zed/keymap.json` defines custom
   keybindings.
 - `renovate-config/` contains shareable Renovate presets for other repositories.
+  `default.json` is the base preset; the other presets extend it through
+  `github>ChrisLauinger77/ChrisLauinger77//renovate-config/default`, so a change
+  to it affects every repository using these presets once it is pushed.
 
 ## General working rules
 
@@ -30,9 +33,8 @@ unrelated user changes.
   discard, or reformat unrelated work.
 - Prefer small, focused changes that follow the style already used in the file.
   Do not modernize old scripts incidentally unless the task calls for it.
-- Keep executable scripts executable. Use the existing interpreter unless a
-  requested change requires another one: `install-codex-skills.sh` is POSIX
-  `sh`, while most other scripts use Bash.
+- Keep executable scripts executable. Use the existing interpreter, currently
+  Bash for every script, unless a requested change requires another one.
 - Quote new shell variable expansions and paths unless splitting or globbing is
   deliberate. For new or substantially revised scripts, prefer explicit error
   handling and validate required arguments and commands.
@@ -48,12 +50,16 @@ unrelated user changes.
 ## Safety boundaries for scripts
 
 Many scripts can change the host system, use `sudo`, install packages, mount or
-unmount storage, delete files, or run `rsync --delete`. Treat them as production
-administration tools:
+unmount storage, delete files, or run `rsync --delete`. Others act on remote
+services; for example, `github-merge-prs.sh` squash-merges GitHub pull requests
+and deletes their branches. Treat them as production administration tools:
 
 - Read a script completely before modifying or running it.
 - Do not execute a system-changing, backup, restore, install, mount, unmount,
   cleanup, or deletion path merely to validate a code change.
+- Do not run a path that merges, pushes, deletes, or otherwise changes remote
+  state, such as GitHub pull requests or branches, merely to validate a code
+  change.
 - Prefer syntax checks, static inspection, documented dry-run modes, and
   temporary directories. Run a mutating path only when the user explicitly
   requested that operation and its targets are verified.
@@ -63,32 +69,42 @@ administration tools:
   deletion, recursive operation, glob, or synchronization target without
   explicit justification.
 
-## Codex skills
+## Agent skills
 
-The personal Codex skills in `skills/` are the canonical copies for all
-machines. Each skill directory must contain a valid `SKILL.md`; keep related
-references under that skill's directory and update `agents/openai.yaml` when
-the skill's user-facing metadata changes.
+The personal skills in `skills/` are the canonical copies for all machines and
+are shared by Codex and Claude Code. Each skill directory must contain a valid
+`SKILL.md`; keep related references under that skill's directory. When a skill
+has an `agents/openai.yaml`, update it whenever the skill's user-facing
+metadata changes.
 
-On macOS or Linux, clone this repository and install the skills with:
-
-```sh
-./scripts/install-codex-skills.sh
-```
-
-The installer creates one symlink per valid skill in `~/.agents/skills`.
-Existing regular files or directories are never overwritten. Preview the
-changes with:
+Codex reads the skills from `~/.agents/skills`, which on each machine is a
+symlink to this repository's `skills/` directory. On macOS or Linux, clone this
+repository and, from its root, create that link if `~/.agents/skills` does not
+exist yet:
 
 ```sh
-./scripts/install-codex-skills.sh --dry-run
+ln -s "$PWD/skills" ~/.agents/skills
 ```
 
-For isolated tests, set `CODEX_USER_SKILLS_DIR` to a temporary directory rather
-than touching the user's real skills directory. After changing a skill, commit
-and push it on one machine and run `git pull` on the others. Because Codex reads
-the skills through symlinks, no reinstall is needed after pulling. Restart Codex
-only if a change is not detected immediately.
+For Claude Code, `scripts/skill_refresh_claude.sh` links each skill from
+`~/.agents/skills`, plus the Codex `gh` skill from `~/.codex/skills/gh`, into
+`~/.claude/skills`. It keeps existing symlinks and skips real directories.
+Run it again after a skill is added:
+
+```sh
+./scripts/skill_refresh_claude.sh
+```
+
+After changing a skill, commit and push it on one machine and run `git pull` on
+the others. Because both tools read the skills through symlinks, no reinstall is
+needed after pulling; only a newly added skill needs
+`skill_refresh_claude.sh` again. Restart Codex or Claude Code only if a change
+is not detected immediately.
+
+`skills/terminal-browser` is a symlink to an absolute path outside this
+repository, where the terminal-browser installation manages the skill. It is
+not a canonical copy: do not edit it through this repository, and expect the
+link to dangle on machines without that installation.
 
 When editing a skill:
 
@@ -108,21 +124,22 @@ could not be run:
 
 - Documentation: inspect the rendered Markdown structure and verify relative
   links and command examples.
-- POSIX shell: run `sh -n` on `scripts/install-codex-skills.sh`.
 - Bash: run `bash -n` on changed Bash scripts. Use ShellCheck when available,
   but distinguish pre-existing findings from regressions.
-- Codex skill installer: use `--dry-run`, preferably with
-  `CODEX_USER_SKILLS_DIR` pointing to a temporary directory. Test real symlink
-  creation only inside a temporary directory.
+- Claude Code skill links: `scripts/skill_refresh_claude.sh` writes to
+  `$HOME/.claude/skills`. Test real symlink creation only with `HOME` set to a
+  temporary directory that contains a test `.agents/skills` tree.
 - Renovate presets: parse changed files with `jq empty`; when Renovate tooling
-  is available, validate presets with it as well.
+  is available, validate presets with it as well. Changes to `default.json`
+  apply to every preset that extends it, so check those presets too.
 - Neovim Lua: run `stylua --check nvim/lua` when StyLua is installed. Run a
   headless Neovim/LazyVim startup check only when dependencies are already
   available and it will not unexpectedly install or update plugins.
 - Zed configuration: parse `zed/keymap.json` with `jq empty` after changes.
-- Skills: inspect front matter, links, bundled references, and corresponding
-  `agents/openai.yaml` metadata. Exercise the documented workflow only when it
-  is safe and within the user's requested scope.
+- Skills: inspect front matter, links, bundled references, and the
+  `agents/openai.yaml` metadata when present. For a symlinked external skill,
+  check only that the link target exists. Exercise the documented workflow only
+  when it is safe and within the user's requested scope.
 
 There is no repository-wide test suite. Do not claim that all repository
 functionality was tested when only area-specific checks were run.
