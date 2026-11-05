@@ -32,8 +32,9 @@
       "dependencyDashboardApproval": true
     },
     {
-      "description": "Pinning only locks the commit already in use; no need to wait",
-      "matchUpdateTypes": ["pinDigest"],
+      "description": "SHA-pinned GitHub Actions do not require a release age delay",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["digest", "pinDigest"],
       "minimumReleaseAge": null
     }
   ]
