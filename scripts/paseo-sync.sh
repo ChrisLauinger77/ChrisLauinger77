@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -12,12 +11,15 @@ command -v paseo >/dev/null || {
 }
 
 [[ -f "$FILE" ]] || {
-    echo "Fehler: plugins.txt fehlt"
+    echo "Fehler: $FILE fehlt" >&2
     exit 1
 }
 
 # Einmal die installierten Plugin-IDs einlesen
-installed=$(paseo plugin ls | awk 'NR > 1 {print $1}')
+if ! installed=$(paseo plugin ls --quiet); then
+    echo "Fehler: Installierte Plugins konnten nicht abgefragt werden." >&2
+    exit 1
+fi
 
 added=0
 skipped=0
