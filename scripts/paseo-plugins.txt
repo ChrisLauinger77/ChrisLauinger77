@@ -1,0 +1,10 @@
+# NAME                INSTALLATIONSQUELLE
+keep-awake            hichamboushaba/keep-awake
+open-with             stv1024/open-with
+paseo-browser         js2me/browser
+paseo-git-graph       siyxo511/git-graph
+paseo-sidechat        moyf/sidechat
+pr-assist             pjhoberman/pr-assist
+quick-chat            npm:@5h0ov/paseo-quick-chat
+quote                 keefeere/quote
+usage-auto-resume     babo-jeonguk/usage-auto-resume
