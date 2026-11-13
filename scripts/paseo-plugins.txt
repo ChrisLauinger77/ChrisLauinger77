@@ -8,3 +8,4 @@ pr-assist             pjhoberman/pr-assist
 quick-chat            npm:@5h0ov/paseo-quick-chat
 quote                 keefeere/quote
 usage-auto-resume     babo-jeonguk/usage-auto-resume
+transfer.             tomgrin10/transfer
