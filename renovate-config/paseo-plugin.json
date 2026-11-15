@@ -3,6 +3,9 @@
   "extends": [
     "github>ChrisLauinger77/ChrisLauinger77//renovate-config/default"
   ],
+  "constraints": {
+    "npm": "^10"
+  },
   "packageRules": [
     {
       "description": "Paseo SDK is tied to the manifest's supported Paseo range; update together after verification",
