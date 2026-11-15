@@ -15,11 +15,10 @@
       "dependencyDashboardApproval": true
     },
     {
-      "description": "React and React Native must match the Paseo app runtime",
+      "description": "React and React Native follow the Paseo app runtime, not npm latest; update them by hand together with the Paseo SDK",
       "matchManagers": ["npm"],
       "matchPackageNames": ["react", "react-native", "@types/react"],
-      "groupName": "Paseo app runtime",
-      "dependencyDashboardApproval": true
+      "enabled": false
     },
     {
       "description": "Stay on the Node 22 line used by CI and validation",
