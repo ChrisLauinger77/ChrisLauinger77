@@ -9,3 +9,5 @@ quick-chat            npm:@5h0ov/paseo-quick-chat
 quote                 keefeere/quote
 usage-auto-resume     babo-jeonguk/usage-auto-resume
 transfer              paseo-transfer
+github-theme          alhassanaraouf/github-theme
+adwaita-theme         alhassanaraouf/adwaita-theme
