@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# List of extension IDs to install
+# List of extension IDs to process
 source_dir="/var/data/dev/"
 if [ -z "$1" ]; then
   cmdext=".sh pack"
@@ -13,12 +13,15 @@ EXTENSIONS=(
   "gnome-shell-extension-messagingmenu"
   "gnome-shell-extension-SettingsCenter"
   "gnome-shell-extension-SmartAutoMoveNG"
+  "gnome-shell-extension-HardDiskLEDNG"
   "shortcuts-gnome-extension"
 )
 
 for EXT in "${EXTENSIONS[@]}"; do
   echo "Packing $EXT ..."
   cd $source_dir$EXT
+#  npm install
+#  npm run lint
   if [[ "$EXT" == "shortcuts-gnome-extension" ]]; then
     cmd="${EXT%%-*}"
     cmd="${cmd,,}"$cmdext  # convert to lowercase & add extension
@@ -27,9 +30,14 @@ for EXT in "${EXTENSIONS[@]}"; do
     cmd="${cmd,,}"$cmdext  # convert to lowercase & add extension
   fi
   $source_dir$EXT/$cmd
-  mv $source_dir$EXT/*-extension.zip ~/Downloads/
+  if [[ "$1" == "pack" || "$1" == "" ]]; then
+    mv $source_dir$EXT/*-extension.zip ~/Downloads/
+  fi
 done
 
 
-
-echo "All extensions packed and moved to Downloads folder."
+if [[ "$1" == "pack" ]]; then
+  echo "All extensions packed and moved to Downloads folder."
+else
+  echo "All extensions processed with $1"
+fi
