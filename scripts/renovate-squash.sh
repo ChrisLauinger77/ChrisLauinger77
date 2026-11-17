@@ -111,6 +111,11 @@ for repo in $repos; do
         | $head.statusCheckRollup.contexts as $checks
         | ($checks.checkRunCountsByState // []) as $runs
         | ($checks.statusContextCountsByState // []) as $statuses
+        # GitHub liefert auch Zustände mit Zähler null.
+        | [$runs[] | select(.count > 0) | .state
+                   | select(. != "SUCCESS" and . != "NEUTRAL" and . != "SKIPPED")] as $blockedRuns
+        | [$statuses[] | select(.count > 0) | .state
+                       | select(. != "SUCCESS")] as $blockedStatuses
         | if $pr == null then error("PR-Daten fehlen")
           elif $pr.state != "OPEN" then "PR nicht mehr offen"
           elif $pr.isDraft != false then "Entwurf"
@@ -126,10 +131,10 @@ for repo in $repos; do
           elif ($checks.totalCount // 0) <= 0 then "keine sichtbaren CI-Checks"
           elif (([$runs[], $statuses[]] | map(.count) | add) !=
                  $checks.totalCount) then "CI-Status unvollständig"
-          elif (any($runs[]; .state != "SUCCESS" and .state != "NEUTRAL" and
-                             .state != "SKIPPED") or
-                any($statuses[]; .state != "SUCCESS")) then
-            "CI nicht grün (" + ([$runs[], $statuses[] | .state] | unique | join(", ")) + ")"
+          elif ($blockedRuns | length) > 0 then
+            "CI nicht grün (" + ($blockedRuns | unique | join(", ")) + ")"
+          elif ($blockedStatuses | length) > 0 then
+            "Commit-Status blockiert (" + ($blockedStatuses | unique | join(", ")) + ")"
           elif $pr.mergeStateStatus != "CLEAN" then
             "Merge-Status " + ($pr.mergeStateStatus // "unbekannt")
           else "READY " + $pr.headRefOid end
