@@ -11,3 +11,4 @@ usage-auto-resume     babo-jeonguk/usage-auto-resume
 transfer              paseo-transfer
 github-theme          alhassanaraouf/github-theme
 adwaita-theme         alhassanaraouf/adwaita-theme
+prompt-manager        yannelli/prompt-manager
