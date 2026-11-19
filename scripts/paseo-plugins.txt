@@ -9,9 +9,9 @@ quick-chat            npm:@5h0ov/paseo-quick-chat
 quote                 keefeere/quote
 usage-auto-resume     babo-jeonguk/usage-auto-resume
 transfer              paseo-transfer
-github-theme          alhassanaraouf/github-theme
-adwaita-theme         alhassanaraouf/adwaita-theme
-prompt-manager        yannelli/prompt-manager
+paseo-github-theme     alhassanaraouf/github-theme
+paseo-adwaita-theme    alhassanaraouf/adwaita-theme
+paseo-prompt-manager  yannelli/prompt-manager
 project-manager       dr-coton/project-manager
 paseo-gitlens         minleev5/paseo-gitlens
 notification-sounds   benklingner/notification-sounds
