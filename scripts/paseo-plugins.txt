@@ -12,3 +12,7 @@ transfer              paseo-transfer
 github-theme          alhassanaraouf/github-theme
 adwaita-theme         alhassanaraouf/adwaita-theme
 prompt-manager        yannelli/prompt-manager
+project-manager       dr-coton/project-manager
+paseo-gitlens         minleev5/paseo-gitlens
+notification-sounds   benklingner/notification-sounds
+better-paseo          roundreddot/better-paseo
