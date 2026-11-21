@@ -36,6 +36,12 @@
       "matchManagers": ["github-actions"],
       "matchUpdateTypes": ["digest", "pinDigest"],
       "minimumReleaseAge": null
+    },
+    {
+      "description": "Follow the Claude Code Action version tag without pinning its digest",
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["anthropics/claude-code-action"],
+      "pinDigests": false
     }
   ]
 }
