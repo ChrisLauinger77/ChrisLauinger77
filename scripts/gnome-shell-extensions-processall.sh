@@ -14,6 +14,7 @@ EXTENSIONS=(
   "gnome-shell-extension-SettingsCenter"
   "gnome-shell-extension-SmartAutoMoveNG"
   "gnome-shell-extension-HardDiskLEDNG"
+  "gnome-shell-extension-PaseoUsage"
   "shortcuts-gnome-extension"
 )
 
