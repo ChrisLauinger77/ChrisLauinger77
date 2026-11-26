@@ -8,6 +8,7 @@
   "labels": ["dependencies"],
   "assignees": ["ChrisLauinger77"],
   "reviewers": ["ChrisLauinger77"],
+  "prHourlyLimit": 0,
   "prConcurrentLimit": 5,
   "timezone": "Europe/Berlin",
   "schedule": ["* * * * 6"],
